@@ -24,7 +24,7 @@ namespace Learn_Owin.App_Start
                  defaults: new { id = RouteParameter.Optional }
                 );
                 
-                app.UseWebApi(config);
+                app.UseWebApi(ODataApi.Configure(config));
             }
     
         }
