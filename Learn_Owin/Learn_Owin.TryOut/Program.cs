@@ -1,5 +1,10 @@
-﻿using Learn_Owin.Infrastructure;
+﻿using Learn_Owin.DataAccess.ElasticSearch.CRUD.Read;
+using Learn_Owin.DataAccess.ElasticSearch.CRUD.Write;
+using Learn_Owin.DataAccess.ElasticSearch.Model;
+using Learn_Owin.Infrastructure;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Learn_Owin.TryOut
 {
@@ -9,7 +14,11 @@ namespace Learn_Owin.TryOut
         {
             try
             {
-                TestException();
+               //  InsertSample();
+                new ElasticRead().Search("Hitlor");
+
+
+                //TestException();
             }
             catch (Exception ex)
             {
@@ -24,5 +33,24 @@ namespace Learn_Owin.TryOut
         {
             throw new NotImplementedCustomException();
         }
+
+        private static void InsertSample()
+        {
+            IEnumerable<Actor> actors = Enumerable.Range(0, 10).Select(i => new Actor() { Industry = "industry " + i, Name = "actor " + i });
+
+            foreach (Actor actor in actors)
+            {
+                new ElasticWrite().IndexDocument(actor);
+            }
+
+
+            IEnumerable<Movie> movies = Enumerable.Range(0, 10).Select(i => new Movie() { Year = 2000 + i, Name = "movie " + i });
+
+            foreach (Movie movie in movies)
+            {
+                new ElasticWrite().IndexDocument(movie);
+            }
+        }
+
     }
 }
